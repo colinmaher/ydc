@@ -1,0 +1,960 @@
+head	1.29;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.29
+date	2016.03.25.02.30.57;	author -;	state -;
+branches;
+next	1.28;
+
+1.28
+date	2015.07.03.21.46.41;	author -;	state -;
+branches;
+next	1.27;
+
+1.27
+date	2015.07.02.23.03.36;	author -;	state -;
+branches;
+next	1.26;
+
+1.26
+date	2015.07.02.22.52.45;	author -;	state -;
+branches;
+next	1.25;
+
+1.25
+date	2015.07.02.01.59.12;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2015.07.02.01.52.26;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2015.07.02.01.47.50;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2015.07.02.01.40.41;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2015.07.01.21.16.19;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2015.07.01.21.05.00;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2015.07.01.20.34.59;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2015.07.01.20.16.09;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2015.07.01.20.12.04;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2014.07.03.03.01.17;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2014.06.27.00.24.12;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2014.06.27.00.21.55;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2014.06.27.00.06.06;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2014.06.27.00.02.32;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2014.06.26.23.51.09;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2014.05.30.02.17.24;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2014.04.11.18.58.33;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2014.04.11.18.57.23;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2014.04.09.02.15.08;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2014.04.09.02.04.03;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2013.07.06.03.19.45;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2013.07.06.03.13.50;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2013.06.27.19.39.10;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2012.04.11.04.02.20;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2011.01.19.06.17.09;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.29
+log
+@-
+@
+text
+@// $Id: bigint.h,v 1.28 2015-07-03 14:46:41-07 - - $
+
+#ifndef __BIGINT_H__
+#define __BIGINT_H__
+
+#include <exception>
+#include <iostream>
+#include <limits>
+#include <utility>
+using namespace std;
+
+#include "debug.h"
+#include "relops.h"
+#include "ubigint.h"
+
+class bigint {
+   friend ostream& operator<< (ostream&, const bigint&);
+   private:
+      ubigint uvalue;
+      bool is_negative {false};
+   public:
+
+      bigint() = default; // Needed or will be suppressed.
+      bigint (long);
+      bigint (const ubigint&, bool is_negative = false);
+      explicit bigint (const string&);
+
+      bigint operator+() const;
+      bigint operator-() const;
+
+      bigint operator+ (const bigint&) const;
+      bigint operator- (const bigint&) const;
+      bigint operator* (const bigint&) const;
+      bigint operator/ (const bigint&) const;
+      bigint operator% (const bigint&) const;
+
+      bool operator== (const bigint&) const;
+      bool operator<  (const bigint&) const;
+};
+
+#endif
+
+@
+
+
+1.28
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.27 2015-07-02 16:03:36-07 - - $
+d30 1
+@
+
+
+1.27
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.26 2015-07-02 15:52:45-07 - - $
+a26 1
+      operator long() const;
+@
+
+
+1.26
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.25 2015-07-01 18:59:12-07 - - $
+d27 1
+a27 1
+      long to_long() const;
+@
+
+
+1.25
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.24 2015-07-01 18:52:26-07 - - $
+d13 1
+a13 1
+#include "rel_ops.h"
+a22 3
+      //
+      // Extra ctors to make bigints.
+      //
+a28 3
+      //
+      // Basic add/sub operators.
+      //
+a36 3
+      //
+      // Comparison operators.
+      //
+a40 2
+bigint pow (const bigint& base, const bigint& exponent);
+
+@
+
+
+1.24
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.23 2015-07-01 18:47:50-07 - - $
+d26 1
+@
+
+
+1.23
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.22 2015-07-01 18:40:41-07 - - $
+a15 3
+//
+// Define class bigint
+//
+a23 10
+      // Ensure synthesized members are genrated.
+      //
+      bigint() = default;
+      bigint (const bigint&) = default;
+      bigint (bigint&&) = default;
+      bigint& operator= (const bigint&) = default;
+      bigint& operator= (bigint&&) = default;
+      ~bigint() = default;
+
+      //
+@
+
+
+1.22
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.21 2015-07-01 14:16:19-07 - - $
+d47 7
+a53 7
+      bigint operator+ (const bigint&);
+      bigint operator- (const bigint&);
+      bigint operator+();
+      bigint operator-();
+      bigint operator* (const bigint&);
+      bigint operator/ (const bigint&);
+      bigint operator% (const bigint&);
+d58 2
+a59 2
+      bool operator== (const bigint&);
+      bool operator<  (const bigint&);
+@
+
+
+1.21
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.20 2015-07-01 14:05:00-07 - - $
+d20 1
+a20 1
+      friend ostream& operator<< (ostream&, const bigint&);
+d42 1
+d47 7
+a53 12
+      friend bigint operator+ (const bigint&, const bigint&);
+      friend bigint operator- (const bigint&, const bigint&);
+      friend bigint operator+ (const bigint&);
+      friend bigint operator- (const bigint&);
+      long to_long() const;
+
+      //
+      // Extended operators implemented with add/sub.
+      //
+      friend bigint operator* (const bigint&, const bigint&);
+      friend bigint operator/ (const bigint&, const bigint&);
+      friend bigint operator% (const bigint&, const bigint&);
+d58 2
+a59 2
+      friend bool operator== (const bigint&, const bigint&);
+      friend bool operator<  (const bigint&, const bigint&);
+@
+
+
+1.20
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.19 2015-07-01 13:34:59-07 - - $
+d13 1
+d22 1
+a23 1
+      ubigint uvalue;
+d40 2
+a41 1
+      bigint (const string&);
+@
+
+
+1.19
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.18 2015-07-01 13:16:09-07 - - $
+d13 1
+d21 2
+a22 6
+      long long_value {};
+      using quot_rem = pair<bigint,bigint>;
+      using unumber = unsigned long;
+      friend quot_rem divide (const bigint&, const bigint&);
+      friend void multiply_by_2 (unumber&);
+      friend void divide_by_2 (unumber&);
+a63 5
+//
+// The rest of the operators do not need to be friends.
+// Make the comparisons inline for efficiency.
+//
+
+a65 13
+inline bool operator!= (const bigint &left, const bigint &right) {
+   return not (left == right);
+}
+inline bool operator>  (const bigint &left, const bigint &right) {
+   return right < left;
+}
+inline bool operator<= (const bigint &left, const bigint &right) {
+   return not (right < left);
+}
+inline bool operator>= (const bigint &left, const bigint &right) {
+   return not (left < right);
+}
+
+@
+
+
+1.18
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.17 2015-07-01 13:12:04-07 - - $
+d20 1
+a20 1
+      long int64_value {};
+d51 1
+a51 1
+      long to_int64() const;
+@
+
+
+1.17
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.16 2014-07-02 20:01:17-07 - - $
+a5 1
+#include <cstdint>
+d20 1
+a20 1
+      int64_t int64_value {};
+d22 1
+a22 1
+      using unumber = uint64_t;
+d41 1
+a41 1
+      bigint (int64_t);
+d51 1
+a51 1
+      int64_t to_int64() const;
+@
+
+
+1.16
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.15 2014-06-26 17:24:12-07 - - $
+d6 1
+d9 1
+d21 1
+a21 1
+      long long_value {};
+d23 1
+a23 1
+      using unumber = unsigned long;
+d42 1
+a42 1
+      bigint (const long);
+d52 1
+a52 1
+      long to_long() const;
+@
+
+
+1.15
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.14 2014-06-26 17:21:55-07 - - $
+d26 1
+d36 1
+d42 1
+d51 1
+d58 1
+a58 1
+
+@
+
+
+1.14
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.13 2014-06-26 17:06:06-07 - - $
+d19 1
+a19 1
+      long long_value;
+@
+
+
+1.13
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.11 2014-06-26 16:51:09-07 - - $
+d54 1
+a61 3
+
+bigint pow (const bigint& base, const bigint& exponent);
+
+d63 2
+a64 1
+// Rest of the comparisons are expressed in terms of == and <.
+d67 2
+@
+
+
+1.12
+log
+@-
+@
+text
+@d19 1
+a19 1
+      long long_value {};
+d27 9
+a35 1
+      // Accept default synthesized members.
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.10 2014-05-29 19:17:24-07 - - $
+d19 1
+a19 1
+      long long_value;
+d27 1
+a27 7
+      // Override implicit members.
+      //
+      bigint();
+      bigint (const bigint&);
+      bigint& operator= (const bigint&);
+      ~bigint();
+      //
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.9 2014-04-11 11:58:33-07 - - $
+d20 5
+a24 2
+      using quotient_remainder = pair<bigint,bigint>;
+      quotient_remainder divide (const bigint&) const;
+d41 4
+a44 3
+      bigint operator+ (const bigint&) const;
+      bigint operator- (const bigint&) const;
+      bigint operator-() const;
+d49 3
+a51 3
+      bigint operator* (const bigint&) const;
+      bigint operator/ (const bigint&) const;
+      bigint operator% (const bigint&) const;
+d55 2
+a56 2
+      bool operator== (const bigint&) const;
+      bool operator<  (const bigint&) const;
+d63 1
+a63 1
+// Rest of the comparisons don't need to be members.
+d65 9
+a73 3
+#define BOOLOPER(OPER,EXPRESSION) \
+inline bool operator OPER (const bigint &left, const bigint &right) { \
+   return EXPRESSION; \
+d75 2
+a76 11
+BOOLOPER(!=, not (left == right))
+BOOLOPER(> , right < left       )
+BOOLOPER(<=, not (right < left) )
+BOOLOPER(>=, not (left < right) )
+
+//
+// Operators with a left operand long and right operand bigint.
+//
+#define LONGLEFT(RTYPE,OPER) \
+inline RTYPE operator OPER (long left, const bigint& right) { \
+   return bigint (left) OPER right; \
+a77 11
+LONGLEFT(bigint,+)
+LONGLEFT(bigint,-)
+LONGLEFT(bigint,*)
+LONGLEFT(bigint,/)
+LONGLEFT(bigint,%)
+LONGLEFT(bool,==)
+LONGLEFT(bool,<)
+LONGLEFT(bool,!=)
+LONGLEFT(bool,>)
+LONGLEFT(bool,<=)
+LONGLEFT(bool,>=)
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.8 2014-04-11 11:57:23-07 - - $
+d20 1
+a20 1
+      typedef pair<bigint,bigint> quotient_remainder;
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.7 2014-04-08 19:15:08-07 - - $
+d66 3
+a68 3
+BOOLOPER(> , right < left)
+BOOLOPER(<=, not (right < left))
+BOOLOPER(>=, not (left < right))
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.6 2014-04-08 19:04:03-07 - - $
+d61 27
+a87 48
+
+inline bool operator!= (const bigint &left, const bigint &right) {
+   return not (left == right);
+}
+
+inline bool operator>  (const bigint &left, const bigint &right) {
+   return right < left;
+}
+
+inline bool operator<= (const bigint &left, const bigint &right) {
+   return not (right < left);
+}
+
+inline bool operator>= (const bigint &left, const bigint &right) {
+   return not (left < right);
+}
+
+//
+// Operators with a left side of long.
+//
+
+inline bigint operator+ (long left, const bigint& right) {
+   return bigint (left) + right;
+}
+
+inline bigint operator- (long left, const bigint& right) {
+   return bigint (left) - right;
+}
+
+inline bigint operator* (long left, const bigint& right) {
+   return bigint (left) * right;
+}
+
+inline bigint operator/ (long left, const bigint& right) {
+   return bigint (left) / right;
+}
+
+inline bigint operator% (long left, const bigint& right) {
+   return bigint (left) % right;
+}
+
+inline bool operator== (long left, const bigint& right) {
+   return bigint (left) == right;
+}
+
+inline bool operator< (long left, const bigint& right) {
+   return bigint (left) < right;
+}
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.5 2013-07-05 20:19:45-07 - - $
+d20 2
+a21 2
+      enum div_rem_op {QUOTIENT, REMAINDER};
+      bigint divide (const bigint&, const div_rem_op) const;
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.4 2013-07-05 20:13:50-07 - - $
+d8 1
+a8 1
+
+d11 1
+a11 1
+#include "trace.h"
+d17 1
+a17 1
+      friend ostream &operator<< (ostream &, const bigint &);
+d21 1
+a21 1
+      bigint divide (const bigint &, const div_rem_op) const;
+d26 4
+a29 4
+      bigint ();
+      bigint (const bigint &);
+      bigint &operator= (const bigint &);
+      ~bigint ();
+d34 1
+a34 1
+      bigint (const string &);
+d38 4
+a41 4
+      bigint operator+ (const bigint &) const;
+      bigint operator- (const bigint &) const;
+      bigint operator- () const;
+      long to_long () const;
+d45 3
+a47 3
+      bigint operator* (const bigint &) const;
+      bigint operator/ (const bigint &) const;
+      bigint operator% (const bigint &) const;
+d51 2
+a52 2
+      bool operator== (const bigint &) const;
+      bool operator<  (const bigint &) const;
+d56 5
+a60 1
+bigint pow (const bigint &base, const bigint &exponent);
+d63 1
+a63 1
+   return ! (left == right);
+d66 2
+a67 2
+inline bool operator<= (const bigint &left, const bigint &right) {
+   return ! (right < left);
+d70 2
+a71 2
+inline bool operator>  (const bigint &left, const bigint &right) {
+   return right < left;
+d75 1
+a75 1
+   return ! (left < right);
+d82 1
+a82 1
+inline bigint operator+ (long left, const bigint &right) {
+d86 1
+a86 1
+inline bigint operator- (long left, const bigint &right) {
+d90 1
+a90 1
+inline bigint operator* (long left, const bigint &right) {
+d94 1
+a94 1
+inline bigint operator/ (long left, const bigint &right) {
+d98 1
+a98 1
+inline bigint operator% (long left, const bigint &right) {
+d102 1
+a102 1
+inline bool operator== (long left, const bigint &right) {
+d106 1
+a106 1
+inline bool operator< (long left, const bigint &right) {
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.3 2013-06-27 12:39:10-07 - - $
+d55 1
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.2 2012-04-10 21:02:20-07 - - $
+a21 3
+      void mul_by_2 ();
+      void div_by_2 ();
+      static bool abs_less (const long &, const long &);
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.1 2011-01-18 22:17:09-08 - - $
+a7 1
+#include <utility>
+a12 19
+class bigint;
+typedef pair <bigint, bigint> bigpair;
+
+//
+// Operators with a left side of int.
+//
+bigint operator+ (int left, const bigint &that);
+bigint operator- (int left, const bigint &that);
+bigint operator* (int left, const bigint &that);
+bigint operator/ (int left, const bigint &that);
+bigint operator% (int left, const bigint &that);
+bool operator== (int left, const bigint &that);
+bool operator!= (int left, const bigint &that);
+bool operator<  (int left, const bigint &that);
+bool operator<= (int left, const bigint &that);
+bool operator>  (int left, const bigint &that);
+bool operator>= (int left, const bigint &that);
+
+
+d19 6
+a24 5
+      int small_value;
+      bigpair div_rem (const bigint &that) const;
+      int compare (const bigint &that) const;
+      int abscompare (const bigint &that) const;
+      bigint mul_by_2 ();
+d30 2
+a31 2
+      bigint (const bigint &that);
+      bigint &operator= (const bigint &that);
+d36 2
+a37 2
+      bigint (const int that);
+      bigint (const string &that);
+d41 2
+a42 2
+      bigint operator+ (const bigint &that) const;
+      bigint operator- (const bigint &that) const;
+d44 1
+a44 1
+      int smallint () const;
+d48 3
+a50 4
+      bigint operator* (const bigint &that) const;
+      bigint operator/ (const bigint &that) const;
+      bigint operator% (const bigint &that) const;
+      bigint pow (const bigint &that) const;
+d54 2
+a55 6
+      bool operator== (const bigint &that) const;
+      bool operator!= (const bigint &that) const;
+      bool operator<  (const bigint &that) const;
+      bool operator<= (const bigint &that) const;
+      bool operator>  (const bigint &that) const;
+      bool operator>= (const bigint &that) const;
+d58 50
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: bigint.h,v 1.2 2011-01-18 21:27:24-08 - - $
+d17 19
+a81 15
+//
+// Operators with a left side of int.
+//
+bigint operator+ (int left, const bigint &that);
+bigint operator- (int left, const bigint &that);
+bigint operator* (int left, const bigint &that);
+bigint operator/ (int left, const bigint &that);
+bigint operator% (int left, const bigint &that);
+bool operator== (int left, const bigint &that);
+bool operator!= (int left, const bigint &that);
+bool operator<  (int left, const bigint &that);
+bool operator<= (int left, const bigint &that);
+bool operator>  (int left, const bigint &that);
+bool operator>= (int left, const bigint &that);
+
+@

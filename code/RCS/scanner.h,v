@@ -1,0 +1,308 @@
+head	1.12;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.12
+date	2016.06.24.00.22.50;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2016.06.24.00.19.42;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2016.06.23.23.00.31;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2016.06.15.01.37.34;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2016.06.15.01.19.17;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2016.06.15.00.53.04;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2016.06.14.23.53.44;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2016.06.14.23.49.16;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2016.06.14.23.34.24;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2015.07.02.23.48.18;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.04.09.02.04.03;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2011.01.19.06.17.09;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@-
+@
+text
+@// $Id: scanner.h,v 1.11 2016-06-23 17:19:42-07 - - $
+
+#ifndef __SCANNER_H__
+#define __SCANNER_H__
+
+#include <iostream>
+#include <utility>
+using namespace std;
+
+#include "debug.h"
+
+enum class tsymbol {SCANEOF, NUMBER, OPERATOR};
+
+struct token {
+   tsymbol symbol;
+   string lexinfo;
+   token (tsymbol sym, const string& lex = string()):
+          symbol(sym), lexinfo(lex){
+   }
+};
+
+class scanner {
+   private:
+      istream& instream;
+      int nextchar {instream.get()};
+      bool good() { return nextchar != EOF; }
+      char get();
+   public:
+      scanner (istream& instream = cin): instream(instream) {}
+      token scan();
+};
+
+ostream& operator<< (ostream&, tsymbol);
+ostream& operator<< (ostream&, const token&);
+
+#endif
+
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.10 2016-06-23 16:00:31-07 - - $
+d29 1
+a29 4
+      scanner (istream& instream = cin): instream(instream) {
+         nextchar = instream.get();
+         DEBUGF ('s', "nextchar = " << nextchar);
+      }
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.9 2016-06-14 18:37:34-07 - - $
+a27 1
+      string strget() { return {get()}; }
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.8 2016-06-14 18:19:17-07 - - $
+d28 1
+a28 1
+      string strget() { return {1, get()}; }
+d30 4
+a33 1
+      scanner (istream& instream = cin): instream(instream) {}
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.7 2016-06-14 17:53:04-07 - - $
+d25 2
+a26 2
+      int peekchar {instream.get()};
+      bool good() { return peekchar != EOF; }
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.6 2016-06-14 16:53:44-07 - - $
+d34 1
+a34 1
+ostream& operator<< (ostream&, const tsymbol);
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.5 2016-06-14 16:49:16-07 - - $
+d14 1
+a14 1
+struct token_t {
+d17 3
+d25 2
+a26 1
+      int peek_char {instream.get()};
+d28 1
+a28 1
+      bool good() { return peek_char != EOF; }
+d31 1
+a31 1
+      token_t scan();
+d34 2
+a35 2
+ostream& operator<< (ostream&, const tsymbol&);
+ostream& operator<< (ostream&, const token_t&);
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.4 2016-06-14 16:34:24-07 - - $
+d21 2
+a22 1
+      int peek_char {cin.get()};
+d26 1
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.3 2015-07-02 16:48:18-07 - - $
+d23 1
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.2 2014-04-08 19:04:03-07 - - $
+d13 1
+d21 2
+a22 3
+      bool seen_eof;
+      char lookahead;
+      void advance();
+a23 1
+      scanner();
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.1 2011-01-18 22:17:09-08 - - $
+d12 1
+a12 1
+enum terminal_symbol {NUMBER, OPERATOR, SCANEOF};
+d14 1
+a14 1
+   terminal_symbol symbol;
+d28 1
+a28 1
+ostream& operator<< (ostream&, const terminal_symbol&);
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: scanner.h,v 1.1 2011-01-18 18:28:41-08 - - $
+a7 1
+
+d10 1
+a10 1
+#include "trace.h"
+d25 1
+a25 1
+      token_t scan ();
+d28 2
+a29 2
+ostream &operator<< (ostream &, const terminal_symbol &);
+ostream &operator<< (ostream &, const token_t &);
+@

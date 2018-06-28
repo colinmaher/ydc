@@ -1,0 +1,86 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.2
+date	2016.06.13.20.47.33;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2015.07.02.22.52.45;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@// $Id: relops.h,v 1.1 2015-07-02 15:52:45-07 - - $
+
+//
+// Assuming that for any given type T, there are operators
+// bool operator< (const T&, const T&);
+// bool operator== (const T&, const T&);
+// as fundamental comparisons for type T, define the other
+// six operators in terms of the basic ones.
+//
+
+#ifndef __REL_OPS_H__
+#define __REL_OPS_H__
+
+template <typename value>
+inline bool operator!= (const value& left, const value& right) {
+   return not (left == right); 
+}
+
+template <typename value>
+inline bool operator>  (const value& left, const value& right) {
+   return right < left; 
+}
+
+template <typename value>
+inline bool operator<= (const value& left, const value& right) {
+   return not (right < left);
+}
+
+template <typename value>
+inline bool operator>= (const value& left, const value& right) {
+   return not (left < right); 
+}
+
+#endif
+
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: rel_ops.h,v 1.2 2015-07-01 14:52:20-07 - - $
+d15 1
+a15 1
+inline bool operator!= (const value &left, const value &right) {
+d20 1
+a20 1
+inline bool operator>  (const value &left, const value &right) {
+d25 1
+a25 1
+inline bool operator<= (const value &left, const value &right) {
+d30 1
+a30 1
+inline bool operator>= (const value &left, const value &right) {
+@
