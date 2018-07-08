@@ -44,6 +44,9 @@ ubigint::ubigint(const string &that)
 
 ubigint ubigint::operator+(const ubigint &that) const
 {
+    if (*this < that)
+        throw domain_error("ubigint::operator+(a<b)");
+
     ubigint answer;
     int quo = 0;
     int rem;
@@ -52,38 +55,38 @@ ubigint ubigint::operator+(const ubigint &that) const
 
     for (i = 0; i < that.ubig_value.size(); ++i) {
         sum = (ubig_value[i] - 48) + (that.ubig_value[i] - 48);
-        cout << "sum: " << sum << endl;
+        //cout << "sum: " << sum << endl;
         if (quo > 0) {
             sum += quo;
         }
 
         quo = sum / 10;
         rem = sum % 10;
-        cout << "rem: " << rem << endl;
-        cout << "quo: " << (char)(quo+48) << endl;
+        //cout << "rem: " << rem << endl;
+        //cout << "quo: " << (char)(quo+48) << endl;
         answer.ubig_value.push_back((unsigned char)rem+48);
     }
-    cout << "made it here" << endl;
+    /*cout << "made it here" << endl;
     cout << "i: " << i << endl;
-    cout << "size:" << ubig_value.size() << endl;
+    cout << "size:" << ubig_value.size() << endl;*/
     for (unsigned int j = i; j < ubig_value.size(); ++j) {
-        cout << "here" << endl;
+        /*cout << "here" << endl;*/
         sum = (ubig_value[j] - 48) + quo;
         quo = sum / 10;
         rem = sum % 10;
         answer.ubig_value.push_back((unsigned char)rem+48);
     }
-    cout << "made it here2" << endl;
+    //cout << "made it here2" << endl;
     if (quo > 0) {
-        cout << "here2" << endl;
-        cout << "quo: " << quo << endl;
+        /*cout << "here2" << endl;
+        cout << "quo: " << quo << endl*/;
         answer.ubig_value.push_back((unsigned char)quo+48);
     }
-    cout << "made it here3" << endl;
-    for (auto n = answer.ubig_value.rbegin(); n <= answer.ubig_value.rend(); ++n) {
-        cout << "answer digits:" << *n << endl;
-    }
-    cout << "answer: " << answer << endl;
+    //cout << "made it here3" << endl;
+    //for (auto n = answer.ubig_value.rbegin(); n <= answer.ubig_value.rend(); ++n) {
+    //    cout << "answer digits:" << *n << endl;
+    //}
+    //cout << "answer: " << answer << endl;
     return answer;
 }
 
@@ -91,7 +94,56 @@ ubigint ubigint::operator-(const ubigint &that) const
 {
     if (*this < that)
         throw domain_error("ubigint::operator-(a<b)");
+    
+    ubigint answer;
+    int diff = 0;
+    unsigned int i;
+    int borrow = 0;
+    int left;
+    int right;
+    //cout << "before for loop" << endl;
+    for (i = 0; i < that.ubig_value.size(); ++i) {
+        left = ubig_value[i];
+        right = that.ubig_value[i];
+        left -= borrow;
+        borrow = 0;
+
+        if (left < right) {
+            left += 10;
+            borrow = 1;
+        }
+
+        diff = left - right;
+        
+        //cout << "diff: " << diff << endl;
+        answer.ubig_value.push_back((unsigned char) diff + 48);
+    }
+
     // return ubigint(uvalue - that.uvalue);
+    for (unsigned int j = i; j < ubig_value.size(); ++j) {
+        //cout << "here" << endl;
+        diff = (left - 48);
+        //cout << "diff: " << diff << endl;
+        answer.ubig_value.push_back((unsigned char) diff + 48);
+    }
+    //cout << "made it here2" << endl;
+    //if (quo > 0) {
+    //    //cout << "here2" << endl;
+    //    //cout << "quo: " << quo << endl;
+    //    answer.ubig_value.push_back((unsigned char)quo + 48);
+    //}
+    //cout << "made it here3" << endl;
+    for (int n = answer.ubig_value.size() - 1; n > 0; n--) {
+        if (answer.ubig_value[n] == 48) {
+            answer.ubig_value.pop_back();
+        }
+        else {
+            break;
+        }
+        //cout << "answer digits:" << *n << endl;
+    }
+    //cout << "answer: " << answer << endl;
+    return answer;
 }
 
 ubigint ubigint::operator*(const ubigint &that) const
@@ -153,21 +205,41 @@ ubigint ubigint::operator%(const ubigint &that) const
 
 bool ubigint::operator==(const ubigint &that) const
 {
-    // return uvalue == that.uvalue;
+    for(unsigned int i = 0; i < ubig_value.size(); ++i) {
+        if (ubig_value[i] != that.ubig_value[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool ubigint::operator<(const ubigint &that) const
 {
+    if (ubig_value.size() != that.ubig_value.size()) {
+        return false;
+    }
+    for (int n = ubig_value.size()-1; n >= 0; --n) {
+        //cout << "value1: " << ubig_value[n]  << " index: " << n << " value2: " << that.ubig_value[n] << endl;
+        if (that.ubig_value[n] > ubig_value[n]) {
+            //cout << "return true" << endl;
+            return true;
+        }
+    }
 
-    // return uvalue < that.uvalue;
+    //cout << "return false" << endl;
+    return false;
 }
 
 ostream &operator<<(ostream &out, const ubigint &that)
 {
     string str = "";
-    
-    for (auto n = that.ubig_value.rbegin(); n <= that.ubig_value.rend(); ++n) {
-        str += *n;
+    int char_count = 0;
+    for (int n = that.ubig_value.size() - 1; n >= 0; n--) {
+        if (char_count % 69 == 0 && char_count != 0) {
+            str += "\\\n";
+        }
+        str += that.ubig_value[n];
+        char_count++;
     }
 
     return out << str;
